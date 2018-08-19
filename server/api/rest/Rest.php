@@ -104,7 +104,7 @@ class Rest
         }
     }
 
-    private function setMethod($class, $methodName, $data = [])
+    private function setMethod($class, $methodName, $data = array())
     {
         
         //var_dump($data);die;
@@ -149,7 +149,7 @@ class Rest
 
         if (method_exists($this->class, $methodName)) {
 
-            call_user_func_array([$this->class, $methodName], $data);
+            call_user_func_array(array($this->class, $methodName), $data);
         } else {
             echo 'error method not exist';
             die;
