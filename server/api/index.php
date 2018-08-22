@@ -5,7 +5,9 @@ require_once (__DIR__.'/config.php');
 
 spl_autoload_register(function ($class) {
     $str = $class . '.php';
-    $str = str_replace('\\', '/', $str);
+    //    $str = str_replace('\\', '/', $str);
+    //
+  //   __DIR__.'/'.mb_strtolower($class).'/'.$str;
     require_once __DIR__.'/'.mb_strtolower($class).'/'.$str; 
 });
 
