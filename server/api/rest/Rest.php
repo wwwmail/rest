@@ -81,8 +81,8 @@ class Rest
     public function setMethodApi()
     {
 
-       // list($a, $d, $db, $table, $path) = explode('/', $this->url, 6);
-         list($a, $b, $c, $d, $e, $db, $table, $path) = explode('/', $this->url, 8);
+        list($a, $d, $db, $table, $path) = explode('/', $this->url, 6);
+       //  list($a, $b, $c, $d, $e, $db, $table, $path) = explode('/', $this->url, 8);
 
 //var_dump($table); die; 
 

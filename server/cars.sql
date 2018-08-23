@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) NOT NULL,
   `token` varchar(255) DEFAULT NULL,
-  `expire` int(11) DEFAULT NULL,
+  `expire` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
