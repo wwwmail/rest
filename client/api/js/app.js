@@ -36,9 +36,7 @@ const Cars = {
                             <div class="card-body">
                                 <h5 class="card-title">{{item.title_brand}} {{item.title_model}}</h5>
                                 <p class="card-text"></p>
-                                <a  class="btn btn-primary">buy</a>
-
-                            <a  v-bind:href="'#/cars/'+item.id" class="btn btn-primary">show this car</a>
+                                <a  v-bind:href="'#/cars/'+item.id" class="btn btn-primary">show this car</a>
                             </div>
                         </div>
                     </div>
@@ -92,6 +90,7 @@ const LoginUser = {
                     this.errors = '';
                     this.flag= true;
                     this.success_logining = 'Congratulation!'
+                    this.$parent.isLogin = true;
 
                 }else if (response.body.success == 'false'){
                     this.errors = response.body.message;
@@ -106,7 +105,7 @@ const LoginUser = {
 
         },
         template: ` 
-                <div class="wrap-search">
+                <div class="wrap-login">
                 {{success_logining}}
                     <form id="login-form" v-bind:class="{'hide-form': flag }">
                         {{errors}}
@@ -128,7 +127,7 @@ const LoginUser = {
                         <div class="form-group row">
                             <label for="submit_form" class="col-md-10 col-form-label"></label>
                             <div class="col-md-2">
-                                <span class="form-control btn btn-primary" v-on:click="sendLoginForm"  id="submit_form">register</span>
+                                <span class="form-control btn btn-primary" v-on:click="sendLoginForm"  id="submit_form">login</span>
                             </div>
                         </div>
                     </form>
@@ -136,6 +135,55 @@ const LoginUser = {
                     `
 
         }
+
+
+
+const Logout = {
+
+    data() {
+        return {
+            success_logout: '',
+        }
+    },
+    created() {
+        this.sendLogOutRequest();
+    },
+    methods: {
+        sendLogOutRequest: function () {
+            var authCookie = getCookie('token');
+           
+            this.$http.get(config.domain + '/auth/logout', 
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + authCookie
+                }
+            },
+            {
+                emulateJSON: true
+            }
+
+            ).then(function (response) {
+
+                if(response.body.success == 'true'){
+
+                    this.success_logout = 'Succes logout!';
+                    this.$parent.isLogin = false;
+
+                }else if (response.body.success == 'false'){
+                    this.errors = response.body.message;
+
+                }
+            });
+        },
+        },
+        template: ` 
+                <div class="wrap-logout">
+                    {{success_logout}} 
+                </div>
+                   `
+        }
+
+
 
 
 
@@ -218,27 +266,27 @@ const RegisterUser = {
         <form id="register-form" v-bind:class="{'hide-form': flag }">
             {{errors}}
             <div class="form-group row">
-                <label for="example-text-input" class="col-md-2 col-form-label">email</label>
+                <label for="example-text-input5" class="col-md-2 col-form-label">email</label>
                 <div class="col-md-10">
-                    <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="register.email" id="example-text-input">
+                    <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="register.email" id="example-text-input5">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="example-text-input" class="col-md-2 col-form-label">first name</label>
+                <label for="example-text-input6" class="col-md-2 col-form-label">first name</label>
                 <div class="col-md-10">
-                    <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="register.first_name" id="example-text-input">
+                    <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="register.first_name" id="example-text-input6">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="example-text-input" class="col-md-2 col-form-label">last name</label>
+                <label for="example-text-input7" class="col-md-2 col-form-label">last name</label>
                 <div class="col-md-10">
-                    <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="register.last_name" id="example-text-input">
+                    <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="register.last_name" id="example-text-input7">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="example-text-input" class="col-md-2 col-form-label">password</label>
+                <label for="example-text-input8" class="col-md-2 col-form-label">password</label>
                 <div class="col-md-10">
-                    <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="password" v-model="register.password" id="example-text-input">
+                    <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="password" v-model="register.password" id="example-text-input8">
                 </div>
             </div>
       
@@ -260,7 +308,8 @@ const DetailCar = {
     props: ['id'],
     data() {
         return {
-            detailCar: this.detailCar
+            detailCar: this.detailCar,
+            success_message: '',
         }
     },
     created() {
@@ -296,13 +345,22 @@ const DetailCar = {
                 }
             },
             ).then(function (response) {
-            
+                if(response.body.success == 'true'){
+                        this.errors = '';
+                        this.flag= true;
+                        this.success_message = 'successfully add car to cart';
+
+                    }else if (response.body.success == 'false'){
+                        this.errors = response.body.message;
+
+                }
             
             });
                     }
         },
         template: ` 
         <div class="detail-car">
+            {{success_message}}
             <div class="card col-4" v-for="(item, i) in detailCar">
 
                 <img class="card-img-top" v-if="item.id" v-bind:src="'img/'+item.id+'.jpg'" alt="">
@@ -436,6 +494,7 @@ const routes = [
 {path: '/cars/:id', component: DetailCar, props: true},
 {path: '/register', component: RegisterUser},
 {path: '/login', component:LoginUser},
+{path: '/logout', component:Logout},
 ]
 
 // 3. —оздаЄм экземпл€р маршрутизатора и передаЄм маршруты в опции `routes`
@@ -449,46 +508,65 @@ const routes = [
 // `router`, чтобы позволить приложению знать о его наличии.
         const app = new Vue({
         router,
-                el: '#app',
-                created() {
-         this.isAuth();
+        el: '#app',
+        created() {
+            this.isAuth();
         },
-                data: {
-                    cartCount:0,
-                    cart:{},
-                    isLogin: false,
-                },
-                methods:{
-                addToCart:function(item){
-                    this.cart = item;
-                        console.log(this.cart);
-                },
-                isAuth: function(){
-                    var authCookie = getCookie('token');
-                    console.log(authCookie);
-                     axios.get(config.domain + '/auth', {
-                     
-                        headers: {
-                          'Authorization': 'Bearer ' + authCookie
-                        }
-                        })
-                        .then(response => {
-                            
-                        if(response.data.success == 'true'){
-                            this.isLogin = true;
-                        }
-                        
-                        })
+        data: {
+            cartCount:0,
+            cart:{},
+            isLogin: false,
+            user_name:''
+        },
+        methods:{
+            isAuth: function(){
+                var authCookie = getCookie('token');
+                axios.get(config.domain + '/auth', 
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + authCookie
+                }
+                })
+                .then(response => {
+                    if(response.data.success == 'true'){
+                        console.log(response.data);
+                        this.isLogin = true;
+                        this.user_name = response.data.user_name;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+            },
+            
+            getCartItems: function(){
+                var authCookie = getCookie('token');
+                
+                axios.get(config.domain + '/orders', 
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + authCookie
+                    }
+                })
+                .then(response => {
+                   
+                    
+                    console.log(response);
+                    this.cart = response.data
+                })
 
-                        .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                        })
-                        .then(function () {
-                        // always executed
-                        });
-                }
-                }
+                .catch(function (error) {
+                // handle error
+                console.log(error);
+                })
+                .then(function () {
+                // always executed
+                });
+            }
+        }
 
         }).$mount('#app')
 

@@ -4,34 +4,16 @@ class Auth extends Rest {
 
     public function postAuth($email, $password)
     {
-
-//
-//        if(!self::isAuth()){
-//           return $this->response(array('success' => 'false', 
-//                                        'message' => 'email or password is wrong'), 200);
-//            
-//        }
-        
         $obj = new Users();
 
         $user = $obj->getUserByEmail($email);
 
-        //var_dump($user); die;
-//                echo $user[0]['password'];
-//                echo $password; die;
         if (password_verify($password, $user[0]['password'])) {
             $token = bin2hex(random_bytes(16));
             $date = (new \DateTime());
             $expire = $date->modify('+' . STAY_LOGINING_TIME . ' minutes')->format('Y-m-d H:i:s');
 
             $obj->setExpire($user[0]['id'], $expire, $token);
-
-            //setcookie("_auth", $token, time() + STAY_LOGINING_TIME * 60);
-
-            
-
-            //$expire = $date->format('Y-m-d H:i:s');
-
 
            return $this->response(array('success' => 'true', 
                                          'message'=> 'congratulation you are logining',
@@ -42,21 +24,44 @@ class Auth extends Rest {
                                          'message'=> 'email or password is wrong'), 200);
             
         }
-//        die;
-//        var_dump($user[0]['password']);
-//        var_dump($user);
-//
-//        die;
     }
     
     public function getAuth()
     {
         if(!self::isAuth()){
-            return $this->response(array('success' => 'false'), 200);
+            
+            return $this->response(array('success' => 'false',), 200);
         } else {
-            return $this->response(array('success' => 'true'), 200);
+          
+            $id = $this->getUserId();
+            $obj = new Users();
+            $user = $obj->getUsersByIdArray($id);
+           
+            $name = $user['first_name']. ' '. $user['last_name'];
+           
+            return $this->response(array('success' => 'true', 'user_name'=> $name), 200);
         }
     }
+    
+    public function getAuthLogout()
+    {
+        $obj = new Users();
+        $authToken = (new self)->getBearerToken();
+        
+        $user = $obj->getUserByToken($authToken);
+        $date = (new \DateTime());
+        $expire = $date->modify('-' . STAY_LOGINING_TIME . ' minutes')->format('Y-m-d H:i:s');
+        $token = bin2hex(random_bytes(16));
+        $obj->setExpire($user[0]['id'], $expire, $token);
+        
+        
+        if(!self::isAuth()){
+            return $this->response(array('success' => 'true'), 200);
+        } else {
+            return $this->response(array('success' => 'false'), 200);
+        }
+    }
+    
 
     public static function isAuth()
     {

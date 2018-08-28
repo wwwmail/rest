@@ -135,7 +135,11 @@ class Rest
             $methodName .= 'Filter';
 
             $data = $this->cleanInputs($_GET);
-        } elseif (!empty($data[0]) && !strstr($data[0], 'filter')) {
+        }elseif (!empty($data[0]) && $data[0] == 'logout') {
+            $methodName .= 'Logout';
+
+            $data = $this->cleanInputs($data);
+        }elseif (!empty($data[0]) && !strstr($data[0], 'filter')) {
             $methodName .= 'ById';
 
             $data = $this->cleanInputs($data);
@@ -146,7 +150,7 @@ class Rest
 
 
 
-//        echo $methodName;
+        //echo $methodName; die;
         //   var_dump($data); die;
 
 

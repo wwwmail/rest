@@ -19,23 +19,38 @@
         <![endif]-->
     </head>
     <body>
-        <h1>Hello, world!</h1>
+        
 
 
         <div class="container">
             <div id="app">
+                <div v-if="isLogin">
+                    <h1>Hello, {{user_name}}</h1>
+                </div>
                 {{isLogin}}
                 <div class="cart">
                     <p>Count cart items: {{cartCount}}</p>
-                    <p><span>Show cart items</span></p>
-                    {{cart}}
+                    <p><span v-on:click="getCartItems">Show cart items</span></p>
+                    
+                    <ul>
+                        <li v-for="(item, i) in cart">Title: {{item.title_brand}}, model: {{item.title_model}} </li>
+                    </ul>
                 </div>
-
-                    <router-link to="/cars">Перейти к Cars</router-link>
-                    <router-link to="/bar">Перейти к Bar</router-link>
-                    <router-link to="/search">Перейти к Search</router-link>
-                     <router-link to="/register">Перейти к Registration</router-link>
-                     <router-link to="/login">Перейти к login</router-link>
+                <div class="nav is-logining" v-if="isLogin">
+                    
+                    <router-link to="/cars">go to Cars</router-link>
+                    <router-link to="/search">go to Search</router-link>
+                    <router-link to="/register">go to Registration</router-link>
+                    <router-link to="/logout">logout</router-link>
+                   
+                </div>
+                <div class="nav is-logout" v-else>
+                    <router-link to="/cars">go to Cars</router-link>
+                    <router-link to="/search">go to Search</router-link>
+                    <router-link to="/register">go to Registration</router-link> 
+                    <router-link to="/login">go to login</router-link>
+                     
+                </div>
                     <router-view></router-view>
 <!--                
 

@@ -18,14 +18,7 @@ class Users extends Rest {
 
         $expire = $date->format('Y-m-d H:i:s');
 
-        // $expire = $date->modify('+'.STAY_LOGINING_TIME.' minutes')->format('Y-m-d H:i:s');
-        //  $expire = new DateTime('now')->format('Y-m-d H:i:s');
-        //    echo $expire; die;
-        //  echo $expire; die;
-        //
-        //
-        //
-        //$password = 'my password';
+        
         $random = openssl_random_pseudo_bytes(18);
 
         $salt = sprintf('$2y$%02d$%s', 13, // 2^n cost factor
@@ -36,16 +29,6 @@ class Users extends Rest {
             'salt' => $salt];
 
         $hash = password_hash($password, PASSWORD_BCRYPT, $options);
-
-
-
-        /*
-         * User Password right!
-         */
-
-
-
-
 
 
         $db = Db::getInstance();
@@ -67,7 +50,7 @@ class Users extends Rest {
     {
 
         $db = Db::getInstance();
-        $result = $db->query("SELECT * FROM users WHERE  id = $id");
+        $result = $db->query("SELECT email, first_name, last_name FROM users WHERE  id = $id");
 
         $data = $result->fetchAll(PDO::FETCH_ASSOC);
 
@@ -76,6 +59,23 @@ class Users extends Rest {
         } else {
             return $this->response($data, 204);
         }
+    }
+    
+    public function getUsersByIdArray($id)
+    {
+
+        $db = Db::getInstance();
+        $result = $db->query("SELECT email, first_name, last_name FROM users WHERE  id = $id");
+
+        $data = $result->fetch(PDO::FETCH_ASSOC);
+        
+        return $data;
+    }
+    
+    public function getUsers()
+    {
+        echo 'user name is aa';
+        
     }
 
     public function getUserByEmail($email)
@@ -122,20 +122,6 @@ class Users extends Rest {
         $stmt = $db->prepare($sql);
         return $stmt->execute($data);
 
-
-//         
-//        $stmt = $db->prepare("INSERT INTO users (email, password, first_name, last_name, token, expire) VALUES (?, ?, ?, ?, ?, ?)");
-//        $stmt->bindParam(1, $email);
-//        $stmt->bindParam(2, $hash);
-//        $stmt->bindParam(3, $first_name);
-//        $stmt->bindParam(4, $last_name);
-//        $stmt->bindParam(5, $token);
-//        $stmt->bindParam(6, $expire);
-//        if ($stmt->execute() == true) {
-//            return $this->response(array('succes' => 'true'), 200);
-//        } else {
-//            return $this->response(array('succes' => 'false'), 200);
-//        }
     }
     
     

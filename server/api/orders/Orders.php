@@ -26,17 +26,16 @@ class Orders extends Rest{
         $stmt->bindParam(3, $status);
 
         if ($stmt->execute() == true) {
-              return $this->response(array('succes' => 'true'), 200);
+              return $this->response(array('success' => 'true'), 200);
         } else {
-            return $this->response(array('succes' => 'false'), 200);
+            return $this->response(array('success' => 'false'), 200);
         }
     }
     
     
     public function getOrders()
-    {
-       
-         if (!Auth::isAuth()) {
+    {  
+        if (!Auth::isAuth()) {
             return $this->response(array('success' => 'false',
                         'message' => 'must be logining'), 200);
         }
@@ -48,14 +47,20 @@ class Orders extends Rest{
         
         
         $db = Db::getInstance();
-        $result = $db->query("SELECT * FROM orders WHERE user_id = $user_id");
+        $result = $db->query("SELECT auto_id FROM orders WHERE user_id = $user_id");
 
         $data = $result->fetchAll(PDO::FETCH_ASSOC);
+        
+        $cars = new Cars();
+        
+        $orders = $cars->getCarsByIds($data);
+        
+//        var_dump($orders); die;
 
-        if (!empty($data)) {
-            return $this->response($data, 200);
+        if (!empty($orders)) {
+            return $this->response($orders, 200);
         } else {
-            return $this->response($data, 204);
+            return $this->response($orders, 204);
         }
     }
 }
