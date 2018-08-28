@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.3
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Авг 17 2018 г., 15:27
--- Версия сервера: 5.6.37
--- Версия PHP: 7.0.21
+-- Время создания: Авг 28 2018 г., 13:26
+-- Версия сервера: 5.6.38
+-- Версия PHP: 7.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -131,18 +131,24 @@ INSERT INTO `model_to_brand` (`id`, `brand_id`, `model_id`) VALUES
 
 CREATE TABLE `orders` (
   `auto_id` int(11) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `payment` varchar(255) NOT NULL DEFAULT '0'
+  `user_id` int(11) DEFAULT NULL,
+  `payment` varchar(255) NOT NULL DEFAULT '0',
+  `status` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`auto_id`, `first_name`, `last_name`, `payment`) VALUES
-(1, 'ivan4', 'yasinskiy1', '100'),
-(1, 'ivan4', 'yasinskiy1', '100');
+INSERT INTO `orders` (`auto_id`, `user_id`, `payment`, `status`) VALUES
+(1, NULL, '100', 0),
+(1, NULL, '100', 0),
+(2, 17, '0', 0),
+(4, 17, '0', 0),
+(3, 17, '0', 0),
+(3, 17, '0', 0),
+(0, 18, '0', 0),
+(1, 18, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -155,16 +161,19 @@ CREATE TABLE `users` (
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
-  `last_name` varchar(255) NOT NULL
+  `last_name` varchar(255) NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `expire` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`) VALUES
-(1, '1', 'ivan4', 'yasinskiy1', '100'),
-(2, 'www@mail.cz', '123456', 'yasinskiy1', 'tt');
+INSERT INTO `users` (`id`, `email`, `password`, `first_name`, `last_name`, `token`, `expire`) VALUES
+(5, 'www@mail.cz', '$2y$13$JDJ5JDEzJG8uRUNkYThiYu.xMIVxwiiltxG1zczofeuT7z8tkYCZG', 'yasinskiy1', 'tt', 'af9c482267513550bcb759c1ee2879b8', '2018-08-23 10:37:48'),
+(17, 'sheva@mail.ru', '$2y$13$JDJ5JDEzJEdkU1hkYVdSMOe1FyJQLBym1kftqtKtrb1PXums/AQt.', '123456', '123456', '07239e15065813ce1750f2ea2e8bfd68', '2018-08-28 10:41:25'),
+(18, '1@mail.cz', '$2y$13$JDJ5JDEzJGlSMHZjL3N6NO5DXzOILRs3rCaS3.VCQH4K.Y7NV4pZC', '1', '1', 'b2056633b35fa9626347f7f53a215e26', '2018-08-28 13:47:14');
 
 --
 -- Индексы сохранённых таблиц
@@ -209,21 +218,25 @@ ALTER TABLE `users`
 --
 ALTER TABLE `brand`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT для таблицы `model`
 --
 ALTER TABLE `model`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT для таблицы `model_to_brand`
 --
 ALTER TABLE `model_to_brand`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

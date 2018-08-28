@@ -8,3 +8,8 @@
     width: 100%;
   //  max-width: 200px;
 }
+
+.hide-form {
+  opacity:0;
+  transition:opacity 1s linear;*
+}

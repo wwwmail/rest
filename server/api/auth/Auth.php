@@ -5,20 +5,13 @@ class Auth extends Rest {
     public function postAuth($email, $password)
     {
 
-
-        if(self::isAuth()){
-            echo 'good auth';
-        }else {
-            echo 'bad auth';
-        }
-        echo 'test';
-
-
-
-        die;
-        //echo $email;
-        //echo $password;
-
+//
+//        if(!self::isAuth()){
+//           return $this->response(array('success' => 'false', 
+//                                        'message' => 'email or password is wrong'), 200);
+//            
+//        }
+        
         $obj = new Users();
 
         $user = $obj->getUserByEmail($email);
@@ -26,29 +19,43 @@ class Auth extends Rest {
         //var_dump($user); die;
 //                echo $user[0]['password'];
 //                echo $password; die;
-        if (password_verify('123456', $user[0]['password'])) {
+        if (password_verify($password, $user[0]['password'])) {
             $token = bin2hex(random_bytes(16));
             $date = (new \DateTime());
             $expire = $date->modify('+' . STAY_LOGINING_TIME . ' minutes')->format('Y-m-d H:i:s');
 
             $obj->setExpire($user[0]['id'], $expire, $token);
 
-            setcookie("_auth", $token, time() + STAY_LOGINING_TIME * 60);
+            //setcookie("_auth", $token, time() + STAY_LOGINING_TIME * 60);
 
             
 
             //$expire = $date->format('Y-m-d H:i:s');
 
 
-            echo 'succes';
+           return $this->response(array('success' => 'true', 
+                                         'message'=> 'congratulation you are logining',
+                                        'auth' => $token,
+                                        ), 200);
         } else {
-            echo 'bad auth1';
+            return $this->response(array('success' => 'false', 
+                                         'message'=> 'email or password is wrong'), 200);
+            
         }
-        die;
-        var_dump($user[0]['password']);
-        var_dump($user);
-
-        die;
+//        die;
+//        var_dump($user[0]['password']);
+//        var_dump($user);
+//
+//        die;
+    }
+    
+    public function getAuth()
+    {
+        if(!self::isAuth()){
+            return $this->response(array('success' => 'false'), 200);
+        } else {
+            return $this->response(array('success' => 'true'), 200);
+        }
     }
 
     public static function isAuth()
@@ -67,9 +74,16 @@ class Auth extends Rest {
             return false;
         }
 
-
-        die;
-        var_dump($user);
+    }
+    
+    public function getUserId()
+    {
+        $obj = new Users();
+        $authToken = (new self)->getBearerToken();
+        $user = $obj->getUserByToken($authToken);
+        
+        return $user[0]['id'];
+        
     }
 
     public function getBearerToken()

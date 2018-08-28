@@ -24,6 +24,7 @@
 
         <div class="container">
             <div id="app">
+                {{isLogin}}
                 <div class="cart">
                     <p>Count cart items: {{cartCount}}</p>
                     <p><span>Show cart items</span></p>
@@ -34,6 +35,7 @@
                     <router-link to="/bar">Перейти к Bar</router-link>
                     <router-link to="/search">Перейти к Search</router-link>
                      <router-link to="/register">Перейти к Registration</router-link>
+                     <router-link to="/login">Перейти к login</router-link>
                     <router-view></router-view>
 <!--                
 
@@ -104,6 +106,8 @@
         <script src="js/vue.js"></script>
         <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
         <script src="js/axios.min.js"></script>
+        <script src="js/vue-resource@1.5.1.js"></script>
+        <script src="js/cookie.js"></script>
         <script src="js/app.js"></script>
 
 

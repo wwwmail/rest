@@ -11,4 +11,4 @@ define('DB_PASSWORD', '');
 
 define('DB_HOST', 'localhost');
 
-define('STAY_LOGINING_TIME', '8'); // in minutes
+define('STAY_LOGINING_TIME', '30'); // in minutes

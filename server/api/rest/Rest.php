@@ -95,6 +95,7 @@ class Rest
                 $this->setMethod($table, 'delete' . ucfirst($table), explode('/', $path));
                 break;
             case 'POST':
+                //var_dump($_POST); die;
                 $this->setMethod($table, 'post' . ucfirst($table), $this->cleanInputs($_POST));
                 break;
             case 'PUT':

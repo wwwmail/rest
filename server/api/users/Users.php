@@ -4,13 +4,12 @@ class Users extends Rest {
 
     public function postUsers($email, $password, $first_name, $last_name)
     {
-        if(!$this->getUserByEmail($email)){
-            echo 'ok will be register '.$email;
-        }else{
-            echo 'sorry user exist with email: '.$email; 
+        if($this->getUserByEmail($email)){
+            return $this->response(array('success' => 'false', 
+                                         'message'=> 'sorry user exist with email: '.$email), 200);
         }
         
-        die;
+      //  die;
         //        $token = random_bytes(24);
         $token = bin2hex(random_bytes(16));
 
@@ -58,9 +57,9 @@ class Users extends Rest {
         $stmt->bindParam(5, $token);
         $stmt->bindParam(6, $expire);
         if ($stmt->execute() == true) {
-            return $this->response(array('succes' => 'true'), 200);
+            return $this->response(array('success' => 'true'), 200);
         } else {
-            return $this->response(array('succes' => 'false'), 200);
+            return $this->response(array('success' => 'false'), 200);
         }
     }
 
