@@ -24,92 +24,37 @@
 
         <div class="container">
             <div id="app">
-                <div v-if="isLogin">
-                    <h1>Hello, {{user_name}}</h1>
+                <div class="menu">
+                	<div class="container">
+	                	<div class="cart">
+                            <a v-if="isLogin"><i class="glyphicon glyphicon-user"></i>{{user_name}}</a>
+		                    <a v-on:click="getCartItems"  class="show-cart"><i class="glyphicon glyphicon-shopping-cart"></i> {{cartCount}}</a>
+		                    
+		                    <ul class="cart-item" v-if="isLogin" >
+		                        <li v-for="(item, i) in cart"><span class="title_brand">{{item.title_brand}}</span><span>{{item.title_model}} </span></li>
+		                    </ul>
+
+		                </div>
+		                <div class="nav is-logining" v-if="isLogin">
+		                    
+		                    <router-link to="/cars">Cars</router-link>
+		                    <router-link to="/search"><i class="glyphicon glyphicon-search"></i>Search</router-link>
+		                    <!-- <router-link to="/register">Registration</router-link> -->
+		                    <router-link to="/logout">Logout</router-link>
+		                   
+		                </div>
+		                <div class="nav is-logout" v-else>
+		                    <router-link to="/cars">Cars</router-link>
+		                    <router-link to="/search"><i class="glyphicon glyphicon-search"></i>Search</router-link>
+		                    <router-link to="/register">Registration</router-link> 
+		                    <router-link to="/login">Login</router-link>
+		                     
+		                </div>
+		            </div>
                 </div>
-                {{isLogin}}
-                <div class="cart">
-                    <p>Count cart items: {{cartCount}}</p>
-                    <p><span v-on:click="getCartItems">Show cart items</span></p>
-                    
-                    <ul>
-                        <li v-for="(item, i) in cart">Title: {{item.title_brand}}, model: {{item.title_model}} </li>
-                    </ul>
-                </div>
-                <div class="nav is-logining" v-if="isLogin">
-                    
-                    <router-link to="/cars">go to Cars</router-link>
-                    <router-link to="/search">go to Search</router-link>
-                    <router-link to="/register">go to Registration</router-link>
-                    <router-link to="/logout">logout</router-link>
-                   
-                </div>
-                <div class="nav is-logout" v-else>
-                    <router-link to="/cars">go to Cars</router-link>
-                    <router-link to="/search">go to Search</router-link>
-                    <router-link to="/register">go to Registration</router-link> 
-                    <router-link to="/login">go to login</router-link>
-                     
-                </div>
+               
                     <router-view></router-view>
-<!--                
 
-                <form id="form">
-                    {{errors}}
-                    <div class="form-group row">
-                        <label for="example-text-input" class="col-2 col-form-label">year</label>
-                        <div class="col-10">
-                            <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="search.year" id="example-text-input">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="example-search-input" class="col-2 col-form-label">brand</label>
-                        <div class="col-10">
-                            <input class="form-control" type="search"  v-model="search.brand" id="example-search-input">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="submit_form" class="col-10 col-form-label"></label>
-                        <div class="col-2">
-                            <span class="form-control" v-on:click="searchCars"  id="submit_form">search</span>
-                        </div>
-                    </div>
-                </form>
-
-                <div class="row " v-if="showCarsBlock">
-
-                    <div class="card " v-for="(item, i) in cars">
-                        <div class="">
-                            <img class="card-img-top" v-bind:src="'img/'+item.id+'.jpg'" v-bind:alt="'item.title_brand' + ' ' + 'item.title_model'">
-                            <div class="card-body">
-                                <h5 class="card-title">{{item.title_brand}} {{item.title_model}}</h5>
-                                <p class="card-text"></p>
-                                <a v-on:click="onClick('author'+i)" class="btn btn-primary">buy</a>
-                                <a v-on:click="getCarById(i+1)" class="btn btn-primary">show</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row " v-else>
-                    <div class="detail-car">
-                        <div class="card col-4" v-for="(item, i) in detailCar">
-
-                            <img class="card-img-top" v-if="item.id" v-bind:src="'img/'+item.id+'.jpg'" alt="">
-                            <div class="card-body">
-                                <h5 class="card-title">{{item.title_brand }} {{item.title_model}}</h5>
-                                <p>year: {{item.year}}</p>
-                                <p>capasity: {{item.capasity}}</p>
-                                <p>speed: {{item.speed}}</p>
-                                <p>price: {{item.price}}</p>
-                                <p>color: {{item.colour}}</p>
-                                <p class="card-text"></p>
-                                <a v-on:click="fetchAllCars" class="btn btn-primary">show all cars</a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>-->
             </div>
         </div>
 

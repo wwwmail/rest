@@ -29,14 +29,18 @@ const Cars = {
 
         },
         template: ` 
-                <div>
-                    <div class="card " v-for="(item, i) in cars">
-                        <div class="">
-                            <img class="card-img-top" v-bind:src="'img/'+item.id+'.jpg'" v-bind:alt="'item.title_brand' + ' ' + 'item.title_model'">
-                            <div class="card-body">
-                                <h5 class="card-title">{{item.title_brand}} {{item.title_model}}</h5>
-                                <p class="card-text"></p>
-                                <a  v-bind:href="'#/cars/'+item.id" class="btn btn-primary">show this car</a>
+                <div class="card-items contant">
+                    <div class="container">
+                        <div class="card " v-for="(item, i) in cars">
+                            <div class="card-item box-shadow">
+                                <div class="card-img">
+                                    <img class="card-img-top"   v-bind:src="'img/'+item.id+'.jpg'" v-bind:alt="'item.title_brand' + ' ' + 'item.title_model'">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{item.title_brand}} {{item.title_model}}</h5>
+                                    <p class="card-text"></p>
+                                    <a  v-bind:href="'#/cars/'+item.id" class="btn btn-show-car">Show this car</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -105,32 +109,22 @@ const LoginUser = {
 
         },
         template: ` 
-                <div class="wrap-login">
-                {{success_logining}}
-                    <form id="login-form" v-bind:class="{'hide-form': flag }">
-                        {{errors}}
-                        <div class="form-group row">
-                            <label for="example-text-input2" class="col-md-2 col-form-label">email</label>
-                            <div class="col-md-10">
-                                <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="login.email" id="example-text-input2">
-                            </div>
+                <div class="wrap-login contant">
+                    {{success_logining}}
+                    <form id="login-form" v-bind:class="{'hide-form': flag }" class="box-shadow">
+                        <div class="form-group col-md-5">
+                            <input class="form-control" placeholder="Email" v-bind:class="{'alert-danger': hasError }" type="text" v-model="login.email" id="example-text-input2">
+                        </div>
+                        <div class="form-group col-md-5">
+                            <input class="form-control"  placeholder="Password" v-bind:class="{'alert-danger': hasError }" type="password" v-model="login.password" id="example-text-input3">
                         </div>
 
-
-                        <div class="form-group row">
-                            <label for="example-text-input3" class="col-md-2 col-form-label">password</label>
-                            <div class="col-md-10">
-                                <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="password" v-model="login.password" id="example-text-input3">
-                            </div>
+                        <div class="form-group col-md-2">
+                            <span class="form-control btn" v-on:click="sendLoginForm"  id="submit_form">login</span>
                         </div>
-
-                        <div class="form-group row">
-                            <label for="submit_form" class="col-md-10 col-form-label"></label>
-                            <div class="col-md-2">
-                                <span class="form-control btn btn-primary" v-on:click="sendLoginForm"  id="submit_form">login</span>
-                            </div>
-                        </div>
+                        <div class="error">{{errors}}</div>
                     </form>
+                    
                 </div>
                     `
 
@@ -261,42 +255,42 @@ const RegisterUser = {
 
         },
         template: ` 
-    <div class="wrap-search">
-    {{success_registration}}
-        <form id="register-form" v-bind:class="{'hide-form': flag }">
-            {{errors}}
-            <div class="form-group row">
-                <label for="example-text-input5" class="col-md-2 col-form-label">email</label>
-                <div class="col-md-10">
+    <div class="wrap-search contant">
+    
+        <form id="register-form" v-bind:class="{'hide-form': flag }" class=" box-shadow">
+            
+            <div class="form-group">
+                <label for="example-text-input5" class="col-md-4 col-form-label">Email</label>
+                <div class="col-md-8">
                     <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="register.email" id="example-text-input5">
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="example-text-input6" class="col-md-2 col-form-label">first name</label>
-                <div class="col-md-10">
+            <div class="form-group">
+                <label for="example-text-input6" class="col-md-4 col-form-label">First name</label>
+                <div class="col-md-8">
                     <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="register.first_name" id="example-text-input6">
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="example-text-input7" class="col-md-2 col-form-label">last name</label>
-                <div class="col-md-10">
+            <div class="form-group">
+                <label for="example-text-input7" class="col-md-4 col-form-label">Last name</label>
+                <div class="col-md-8">
                     <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="register.last_name" id="example-text-input7">
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="example-text-input8" class="col-md-2 col-form-label">password</label>
-                <div class="col-md-10">
+            <div class="form-group">
+                <label for="example-text-input8" class="col-md-4 col-form-label">Password</label>
+                <div class="col-md-8">
                     <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="password" v-model="register.password" id="example-text-input8">
                 </div>
             </div>
-      
-            <div class="form-group row">
-                <label for="submit_form" class="col-md-10 col-form-label"></label>
-                <div class="col-md-2">
-                    <span class="form-control btn btn-primary" v-on:click="sendRegisterForm"  id="submit_form">register</span>
+            <div class="error">{{errors}}</div>
+            <div class="form-group form-group-btn">
+                <div class="col-md-4">
+                    <span class="form-control btn btn-primary" v-on:click="sendRegisterForm"  id="submit_form">Register</span>
                 </div>
             </div>
         </form>
+        {{success_registration}}
     </div>
         `
 
@@ -348,7 +342,7 @@ const DetailCar = {
                 if(response.body.success == 'true'){
                         this.errors = '';
                         this.flag= true;
-                        this.success_message = 'successfully add car to cart';
+                        this.success_message = 'Successfully add car to cart';
 
                     }else if (response.body.success == 'false'){
                         this.errors = response.body.message;
@@ -359,21 +353,24 @@ const DetailCar = {
                     }
         },
         template: ` 
-        <div class="detail-car">
-            {{success_message}}
-            <div class="card col-4" v-for="(item, i) in detailCar">
-
-                <img class="card-img-top" v-if="item.id" v-bind:src="'img/'+item.id+'.jpg'" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">{{item.title_brand }} {{item.title_model}}</h5>
-                    <p>year: {{item.year}}</p>
-                    <p>capasity: {{item.capasity}}</p>
-                    <p>speed: {{item.speed}}</p>
-                    <p>price: {{item.price}}</p>
-                    <p>color: {{item.colour}}</p>
+        <div class="detail-car contant box-shadow">
+            
+            <div class="card" v-for="(item, i) in detailCar">
+                <div class="col-md-4">
+                    <img class="card-img-top" v-if="item.id" v-bind:src="'img/'+item.id+'.jpg'" alt="">
+                </div>
+                <div class="card-body col-md-8">
+                    <h4 class="card-title">{{item.title_brand }} {{item.title_model}}</h4>
+                    <p>Year: {{item.year}}</p>
+                    <p>Capasity: {{item.capasity}}</p>
+                    <p>Speed: {{item.speed}}</p>
+                    <p>Price: {{item.price}}</p>
+                    <p>Color: {{item.colour}}</p>
                     <p class="card-text"></p>
-                    <span class="btn btn-primary" v-on:click=addCarToCart(item)>                                                                                                                                                                                                                                                                                                                                                                                                                                                        by car</span>
-                    <a href="#/cars" class="btn btn-primary">show all cars</a>
+                    <div class="success_message">{{success_message}}</div>
+                    <span class="btn" v-on:click=addCarToCart(item)>                                                                                                                                                                                                                                                                                                                                                                                                                                                        by car</span>
+                    <a href="#/cars" class="btn">show all cars</a>
+
                 </div>
 
             </div>
@@ -431,39 +428,41 @@ const SearchCars = {
     },
     template: ` 
     
-        <div class="wrap-search">
-            <form id="form">
-                {{errors}}
-                <div class="form-group row">
-                    <label for="example-text-input" class="col-2 col-form-label">year</label>
-                    <div class="col-10">
-                        <input class="form-control" v-bind:class="{'alert-danger': hasError }" type="text" v-model="search.year" id="example-text-input">
+        <div class="wrap-search contant">
+            <form id="form" class="box-shadow">
+                
+                <div class="form-group col-md-5">
+                    
+                    <div class="">
+                        <input class="form-control" placeholder="year" v-bind:class="{'alert-danger': hasError }" type="text" v-model="search.year" id="example-text-input">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="example-search-input" class="col-2 col-form-label">brand</label>
-                    <div class="col-10">
-                        <input class="form-control" type="search"  v-model="search.brand" id="example-search-input">
+                <div class="form-group col-md-5">
+                    
+                    <div class="">
+                        <input class="form-control" type="search" placeholder="brand" v-model="search.brand" id="example-search-input">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="submit_form" class="col-10 col-form-label"></label>
-                    <div class="col-2">
-                        <span class="form-control" v-on:click="searchCars"  id="submit_form">search</span>
+                <div class="form-group col-md-2">
+                    <div class="">
+                        <span class="form-control" v-on:click="searchCars"  id="submit_form">Search</span>
                     </div>
                 </div>
+                <div class="error">{{errors}}</div>
+                
             </form>
 
             <div class="wrap-cars">
                 <div class="card " v-for="(item, i) in cars">
-                    <div class="">
-                        <img class="card-img-top" v-bind:src="'img/'+item.id+'.jpg'" v-bind:alt="'item.title_brand' + ' ' + 'item.title_model'">
+                    <div class="card-item box-shadow">
+                        <div class="card-img">
+                            <img class="card-img-top" v-bind:src="'img/'+item.id+'.jpg'" v-bind:alt="'item.title_brand' + ' ' + 'item.title_model'">
+                        </div>
                         <div class="card-body">
                             <h5 class="card-title">{{item.title_brand}} {{item.title_model}}</h5>
                             <p class="card-text"></p>
-                            <a  class="btn btn-primary">buy</a>
-
-                            <a  v-bind:href="'#/cars/'+item.id" class="btn btn-primary">show this car</a>
+                            <a  class="btn">Buy</a>
+                            <a  v-bind:href="'#/cars/'+item.id" class="btn">Show this car</a>
                         </div>
                     </div>
                 </div>
@@ -482,11 +481,11 @@ const SearchCars = {
 
 const Bar = {template: '<div>bar</div>'}
 
-// 2. Определяем несколько маршрутов
-// Каждый маршрут должен указывать на компонент.
-// "Компонентом" может быть как конструктор компонента, созданный
-// через `Vue.extend()`, так и просто объект с опциями компонента.
-// Мы поговорим о вложенных маршрутах позднее.
+// 2. ГЋГЇГ°ГҐГ¤ГҐГ«ГїГҐГ¬ Г­ГҐГ±ГЄГ®Г«ГјГЄГ® Г¬Г Г°ГёГ°ГіГІГ®Гў
+// ГЉГ Г¦Г¤Г»Г© Г¬Г Г°ГёГ°ГіГІ Г¤Г®Г«Г¦ГҐГ­ ГіГЄГ Г§Г»ГўГ ГІГј Г­Г  ГЄГ®Г¬ГЇГ®Г­ГҐГ­ГІ.
+// "ГЉГ®Г¬ГЇГ®Г­ГҐГ­ГІГ®Г¬" Г¬Г®Г¦ГҐГІ ГЎГ»ГІГј ГЄГ ГЄ ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г° ГЄГ®Г¬ГЇГ®Г­ГҐГ­ГІГ , Г±Г®Г§Г¤Г Г­Г­Г»Г©
+// Г·ГҐГ°ГҐГ§ `Vue.extend()`, ГІГ ГЄ ГЁ ГЇГ°Г®Г±ГІГ® Г®ГЎГєГҐГЄГІ Г± Г®ГЇГ¶ГЁГїГ¬ГЁ ГЄГ®Г¬ГЇГ®Г­ГҐГ­ГІГ .
+// ГЊГ» ГЇГ®ГЈГ®ГўГ®Г°ГЁГ¬ Г® ГўГ«Г®Г¦ГҐГ­Г­Г»Гµ Г¬Г Г°ГёГ°ГіГІГ Гµ ГЇГ®Г§Г¤Г­ГҐГҐ.
 const routes = [
 {path: '/cars', component: Cars},
 {path: '/bar', component: Bar},
@@ -497,15 +496,15 @@ const routes = [
 {path: '/logout', component:Logout},
 ]
 
-// 3. Создаём экземпляр маршрутизатора и передаём маршруты в опции `routes`
-// Вы можете передавать и дополнительные опции, но пока не будем усложнять.
+// 3. Г‘Г®Г§Г¤Г ВёГ¬ ГЅГЄГ§ГҐГ¬ГЇГ«ГїГ° Г¬Г Г°ГёГ°ГіГІГЁГ§Г ГІГ®Г°Г  ГЁ ГЇГҐГ°ГҐГ¤Г ВёГ¬ Г¬Г Г°ГёГ°ГіГІГ» Гў Г®ГЇГ¶ГЁГЁ `routes`
+// Г‚Г» Г¬Г®Г¦ГҐГІГҐ ГЇГҐГ°ГҐГ¤Г ГўГ ГІГј ГЁ Г¤Г®ГЇГ®Г«Г­ГЁГІГҐГ«ГјГ­Г»ГҐ Г®ГЇГ¶ГЁГЁ, Г­Г® ГЇГ®ГЄГ  Г­ГҐ ГЎГіГ¤ГҐГ¬ ГіГ±Г«Г®Г¦Г­ГїГІГј.
         const router = new VueRouter({
-        routes // сокращённая запись для `routes: routes`
+        routes // Г±Г®ГЄГ°Г Г№ВёГ­Г­Г Гї Г§Г ГЇГЁГ±Гј Г¤Г«Гї `routes: routes`
                 })
 
-// 4. Создаём и монтируем корневой экземпляр приложения.
-// Убедитесь, что передали экземпляр маршрутизатора в опции
-// `router`, чтобы позволить приложению знать о его наличии.
+// 4. Г‘Г®Г§Г¤Г ВёГ¬ ГЁ Г¬Г®Г­ГІГЁГ°ГіГҐГ¬ ГЄГ®Г°Г­ГҐГўГ®Г© ГЅГЄГ§ГҐГ¬ГЇГ«ГїГ° ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГї.
+// Г“ГЎГҐГ¤ГЁГІГҐГ±Гј, Г·ГІГ® ГЇГҐГ°ГҐГ¤Г Г«ГЁ ГЅГЄГ§ГҐГ¬ГЇГ«ГїГ° Г¬Г Г°ГёГ°ГіГІГЁГ§Г ГІГ®Г°Г  Гў Г®ГЇГ¶ГЁГЁ
+// `router`, Г·ГІГ®ГЎГ» ГЇГ®Г§ГўГ®Г«ГЁГІГј ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГѕ Г§Г­Г ГІГј Г® ГҐГЈГ® Г­Г Г«ГЁГ·ГЁГЁ.
         const app = new Vue({
         router,
         el: '#app',
@@ -571,3 +570,16 @@ const routes = [
         }).$mount('#app')
 
 
+$( ".show-cart" ).click(function() {
+  $( ".cart-item" ).toggle( "slow", function() {
+  });
+});
+jQuery(function($){
+    $(document).mouseup(function (e){ 
+        var block = $(".cart-item"); 
+        if (!block.is(e.target) 
+            && block.has(e.target).length === 0) { 
+            block.hide(); 
+        }
+    }); 
+});
