@@ -34,6 +34,7 @@ const Cars = {
                         <div class="card " v-for="(item, i) in cars">
                             <div class="card-item box-shadow">
                                 <div class="card-img">
+               
                                     <img class="card-img-top"   v-bind:src="'img/'+item.id+'.jpg'" v-bind:alt="'item.title_brand' + ' ' + 'item.title_model'">
                                 </div>
                                 <div class="card-body">
@@ -335,7 +336,8 @@ const DetailCar = {
             {
                 emulateJSON: true,
                 headers: {
-                    'Authorization': 'Bearer ' + authCookie
+                    'Authorization': 'Bearer ' + authCookie,
+                    'name': 'value',
                 }
             },
             ).then(function (response) {

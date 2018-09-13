@@ -1,8 +1,25 @@
-RewriteEngine On 
+#SetEnvIf Authorization .+ HTTP_AUTHORIZATION=$0
+#RewriteEngine On 
+RewriteEngine On
+#RewriteCond %{HTTP:Authorization} ^(.*)
+#RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
 
-RewriteBase /server/api/ 
-#RewriteBase /~user4/php7/rest/server/api/
+
+RewriteRule .* index.php [QSA,E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+
+#RewriteEngine On
+#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+#RewriteBase /server/api/ 
+RewriteBase /~user4/php7/rest/server/api/
 RewriteCond %{REQUEST_FILENAME} !-f 
 #RewriteCond %{REQUEST_FILENAME} !-d 
 RewriteRule ^.*$ index.php 
+
+
+#RewriteEngine On
+#RewriteCond %{HTTP:Authorization} ^(.*)
+#RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
 DirectorySlash Off
